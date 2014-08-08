@@ -1,0 +1,58 @@
+---
+title: "R Setup"
+author: "Devin Pastoor"
+date: "August 1, 2014"
+output: word_document
+---
+
+# R Setup Instructions
+
+Welcome! We look forward to seeing you at the CTM workshop. Before arrival, please have a computer with the following programs installed and set up:
+
+* R 3.1 and Rtools
+* Rstudio v0.98.9
+* Required R packages
+
+Note: for those of you that already have R installations on your computer, please make sure you have at least R version 3.0.2 and Rstudio version 0.98.9. If you are unsure, upon opening Rstudio, the R version is printed in the console. For the rstudio version, open Rstudio and go to `Help` --> `About Rstudio`
+
+
+### R 3.1 download 
+
+R can be found on [http://cran.rstudio.com/](http://cran.rstudio.com/)
+
+![Rdownload](images/Rdownload)
+
+1) *download and install* the base image
+2) *download and install* Rtools
+
+![RforWindows](images/RforWindows)
+
+### Rstudio
+
+Rstudio is a fantastic development environment for R that can be used locally and on servers. 
+
+It can be found at [http://www.rstudio.com](http://www.rstudio.com/products/RStudio/#Desk)
+
+1) **download and install** Rstudio Desktop (open source edition)
+
+### R package installation
+
+After R, Rtools, and Rstudio are installed, the following packages should be installed:
+
+* ggplot2
+* reshape2
+* dplyr
+* devtools
+
+These can be installed in the console via the command line
+```
+install.packages(c("ggplot2", "reshape2", "dplyr", "devtools"))
+```
+
+or via Rstudio's graphical package installer. A brief video tutorial can be found [here](https://www.youtube.com/watch?v=u1r5XTqrCTQ).
+
+
+# Optional: Getting Started 
+
+Though no prior experience with R is required, it is suggested to have some familiarity with basic usage. The [datacamp introduction to R course material](https://www.datacamp.com/courses/introduction-to-r) can be covered in 1-2 hours, and is *highly* recommended.
+
