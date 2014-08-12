@@ -5,7 +5,7 @@ date: "August 1, 2014"
 output: word_document
 ---
 
-# R Setup Instructions and Getting STarted
+# R Setup Instructions and Getting Started
 
 Welcome! This document will provide the basic information to get you up and running with all material needed for the R course. We look forward to seeing you at the CTM workshop!
 

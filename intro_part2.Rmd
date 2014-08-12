@@ -1,0 +1,313 @@
+
+---
+## Reading in Data
+
+Data from a variety of formats an be read into R - two of the most common are .tab and .csv
+
+Lets read in the dataset:
+```{r}
+data <- read.csv('./data/PopPKIVdata.csv', stringsAsFactors = F, skip = 3, header = T)
+head(data)
+```
+
+---
+We can quickly find additional information about the dataset
+```{r}
+# What are the column names?
+names(data)
+# how long is the dataset - did everything read in correctly?
+nrow(data)
+# numer of columns
+ncol(data)
+```
+
+---
+
+```{r}
+#What is the structure of each column
+str(data)
+```
+
+
+---
+We can get some summary statistics
+
+```{r}
+summary(data)
+```
+
+---
+## Summaries with table()
+
+
+```{r}
+table(data$ISM)
+table(data$ISM, data$DOSE)
+```
+
+---
+## Working with data frames
+class(data)
+
+- Data frames are uniform in shape and information inside a column - this makes it easy to work with!
+- **[ ]**'s are an easy way to get to certain parts of a data frame
+- A data frame is written as: data[row, column]
+
+```{r}
+data[2,]
+head(data[,2], n = 16)
+```
+
+---
+## Columns using $
+
+Can easily call on or manipulate a single column via **dataframe$colname**
+
+
+```{r}
+head(data$AMT)
+unique(data$TIME)
+```
+
+--- 
+## POP QUIZ
+
+How can easily check the number of unique individuals in the dataset using what we've learned so far?
+
+---
+
+## ANSWER
+```{r}
+length(unique(data$CID))
+```
+
+--- 
+
+## Subsetting
+Can easily subset rows of the data frame using the <font color="red">[ ]</font> in combination with <font color="red">$ </font>
+```{r}
+ID1 <- data[data$CID == 1,]
+head(ID1, n = 3)
+tail(ID1, n = 3)
+```
+
+---
+## Subsetting (II)
+Or can take only a subset of columns
+```{r}
+datasmall <- data[, c(1:4)]
+```
+
+or using the column names
+
+```{r}
+keepcols <- c("CID", "TIME", "CONC", "AMT")
+datasmall <- data[, keepcols]
+```
+
+---
+## Using both together
+```{r}
+
+keepcols <- c("CID", "TIME", "CONC", "AMT")
+ID1 <- data[data$CID == 1, keepcols]
+head(ID1)
+```
+
+---
+## Multiple subsets
+
+You can also use the **&** and **|** operators to do multiple subsets at once
+
+Let's make a dataset with only males less than 40 years old
+
+```{r}
+youngmales <- data[data$ISM != 0 & data$AGE <= 40,]
+head(youngmales[!duplicated(youngmales$CID),])
+```
+
+---
+## Subsetting to assign values
+
+What if we needed to change all the 0's in the AMT column to NA values
+```{r}
+# so we can keep the original dataset
+changedata <- data
+head(changedata, n = 3)
+changedata[changedata$AMT == 0, "AMT"] <- 'NA'
+head(changedata, n = 3)
+```
+
+---
+## Adding Columns to a DF with **$**
+```{r}
+# find the mean age and add it to new column
+data$MEANAGE <- mean(data$AGE)
+head(data, n= 3)
+```
+
+```{r, include = FALSE}
+# can also delete columns
+data$MEANAGE <- NULL
+head(data, n = 3)
+```
+
+---
+## Transforming data
+
+What if we wanted time to be in minutes rather than hours
+```{r}
+data$TIMEMIN <- data$TIME*60
+head(data)
+```
+```{r}
+data$TIMEMIN <- NULL
+```
+
+---
+## Create some Data to Merge
+```{r}
+tableOne <- data.frame(ID = c(1:3), PERIOD = c("a", "b", "c"))
+tableTwo <- data.frame(ID = c(seq(1,5,2)), PERIOD= c("a", "c", "f"),ISM = c(0, 1, 0) )
+
+```
+```{r}
+tableOne
+tableTwo
+```
+
+---
+## Merging Options
+Can merge by similarities in specific column, specific index, or can combine all
+```{r}
+merge(tableOne, tableTwo, by = "ID")
+merge(tableOne, tableTwo, by = "ID", all = T)
+```
+
+---
+## Merging Options (II)
+```{r}
+merge(tableOne, tableTwo, by = "ID", all.x = T)
+merge(tableOne, tableTwo, by = "ID", all.y = T)
+```
+
+---
+## Merging Options (III)
+Can also bind together next to one another
+```{r}
+cbind(tableOne, tableTwo)
+```
+
+---
+## Merging Options (IV)
+
+Can stack two data frames using `rbind` but data frames must have equal number of columns
+
+```{r}
+tableOne <- data.frame(ID = c(1:3), PERIOD = c("a", "b", "c"))
+tableTwo <- data.frame(ID = c(seq(1,5,2)), PERIOD= c("a", "c", "f"))
+rbind(tableOne, tableTwo)
+```
+
+---
+## Reshaping Data
+
+There is an excellent package (library) called reshape2
+
+Let's load it and get some data to play with
+```{r}
+library(reshape2)
+keepcols <- c("CID", "TIME", "CONC")
+concTime <- data[data$CID < 10, keepcols]
+tail(concTime)
+```
+
+
+How can we make a table of concentrations by time for all ID's? (long to wide conversion)
+
+---
+```{r}
+molten <- melt(concTime, id.vars = c("TIME", "CID"), measure.vars = c("CONC"))
+head(molten)
+concTimeWide <- dcast(molten, TIME + variable ~ CID)
+head(concTimeWide, n = 4)
+```
+
+---
+## PLYR
+Lets introduce another powerful library **plyr**
+
+It is based around the paradigm **SPLIT-APPLY-COMBINE**
+
+```{r}
+library(plyr)
+
+cmax <- ddply(data, .(CID), summarize, CMAXobs = max(CONC))
+head(cmax)
+
+```
+
+---
+Lets merge the CMAX column back into the dataset
+```{r}
+data <- merge(data, cmax)
+head(data, n = 3)
+tail(data, n = 3)
+```
+
+
+---
+## Sorting Data
+
+Lets sort the data by time
+
+```{r}
+keep <- c("CID", "TIME", "CONC", "DOSE")
+sorted <- data[, keep]
+sorted <- sorted[order(sorted$TIME),]
+head(sorted)
+```
+
+--- 
+## Multiple Sorts at Once
+
+First let's 'mess up' the dataset - sort by descending concentrations
+```{r}
+concSort <- sort[order(-sort$CONC),]
+head(concSort)
+```
+
+--- 
+##Mutliple Sorts at Once (II)
+- let's see what happens if we sort by ID
+```{r}
+concSort <- concSort[order(concSort$CID),]
+head(concSort)
+```
+
+Oh no the times aren't in order!
+
+---
+## Multiple Sorts at Once (III)
+
+Thankfully we can fix this by sorting ID **and** time within ID 
+```{r}
+concSort <- concSort[order(concSort$CID, concSort$TIME),]
+head(concSort)
+```
+
+---
+## Sample Dosing Sheet Creation
+
+```{r}
+conc <- c(0)
+nSubj <- 40
+times <- c(0, 0.5, 1, 2, 3, 4, 6, 8, 12, 16, 24)
+t <- expand.grid(TIME = times, CID = 1:nSubj, CONC = conc)
+t <- as.data.frame(t)
+democols <- c("CID", "AGE", "WT", "CLCR")
+demo <- unique(data[, democols])
+res <- merge(t, demo, by = "CID")
+head(res)
+```
+

@@ -1,0 +1,125 @@
+
+## Subsetting
+Can easily subset rows of the data frame using the <font color="red">[ ]</font> in combination with <font color="red">$ </font>
+```{r}
+ID1 <- data[data$CID == 1,]
+head(ID1, n = 3)
+tail(ID1, n = 3)
+```
+
+---
+## Subsetting (II)
+Or can take only a subset of columns
+```{r}
+datasmall <- data[, c(1:4)]
+```
+
+or using the column names
+
+```{r}
+keepcols <- c("Subject", "Wt", "CONC", "AMT")
+datasmall <- data[, keepcols]
+```
+
+---
+## Using both together
+```{r}
+
+keepcols <- c("CID", "TIME", "CONC", "AMT")
+ID1 <- data[data$CID == 1, keepcols]
+head(ID1)
+```
+
+---
+## Multiple subsets
+
+You can also use the **&** and **|** operators to do multiple subsets at once
+
+Let's make a dataset with only males less than 40 years old
+
+```{r}
+youngmales <- data[data$ISM != 0 & data$AGE <= 40,]
+head(youngmales[!duplicated(youngmales$CID),])
+```
+
+---
+## Subsetting to assign values
+
+What if we needed to change all the 0's in the AMT column to NA values
+```{r}
+# so we can keep the original dataset
+changedata <- data
+head(changedata, n = 3)
+changedata[changedata$AMT == 0, "AMT"] <- 'NA'
+head(changedata, n = 3)
+```
+
+---
+## Adding Columns to a DF with **$**
+```{r}
+# find the mean age and add it to new column
+data$MEANAGE <- mean(data$AGE)
+head(data, n= 3)
+```
+
+```{r, include = FALSE}
+# can also delete columns
+data$MEANAGE <- NULL
+head(data, n = 3)
+```
+
+---
+## Transforming data
+
+What if we wanted time to be in minutes rather than hours
+```{r}
+data$TIMEMIN <- data$TIME*60
+head(data)
+```
+```{r}
+data$TIMEMIN <- NULL
+```
+
+
+## Sorting Data
+
+Lets sort the data by time
+
+```{r}
+keep <- c("CID", "TIME", "CONC", "DOSE")
+sorted <- data[, keep]
+sorted <- sorted[order(sorted$TIME),]
+head(sorted)
+```
+
+--- 
+## Multiple Sorts at Once
+
+First let's 'mess up' the dataset - sort by descending concentrations
+```{r}
+concSort <- sort[order(-sort$CONC),]
+head(concSort)
+```
+
+--- 
+##Mutliple Sorts at Once (II)
+- let's see what happens if we sort by ID
+```{r}
+concSort <- concSort[order(concSort$CID),]
+head(concSort)
+```
+
+Oh no the times aren't in order!
+
+---
+## Multiple Sorts at Once (III)
+
+Thankfully we can fix this by sorting ID **and** time within ID 
+```{r}
+concSort <- concSort[order(concSort$CID, concSort$TIME),]
+head(concSort)
+```
+
+---
+
+
