@@ -200,20 +200,6 @@ You can also also visually see what is in your workspace in Rstudio
 
 ---
 
-## R as a Language
-- R is more than statistical software, it is a computer language
-- Like any language it has rules (some poorly enforced), and conventions
-- Case sensitivity matters
-```{r}
-a<-3
-A<-4
-print(c(a,A))
-```
-   <font color="red">**a** &#8800; **A**</font> 
-2. What happens if I type **print(a,A)**?
-
----
-
 ## Concatenating with `c`
 - So what does **c** do?
 ```{r}
@@ -223,6 +209,8 @@ print(A)
 - `c` stands for concatenate and allows vectors to have multiple elements
 - If you ever need two elements in a vector, you need to wrap it up in `c`, which is one of the most used functions you will ever use
 - `c` is important to put any vector together, but remember that *objects within a vector must all be of the same type*
+
+---
 
 ## Some Other Language ~~Bugs~~ Features
 - R is maddeningly inconsistent in it's naming conventions
@@ -236,23 +224,35 @@ print(A)
 ---
 
 ## Special Operators
-- The comparison operators `<`, `>`, `<=`, `>=`, `==`, and `!=` are used to compare values across vectors
-```{r vectorcomp}
-big<-c(9,12,15,25)
-small<-c(9,3,4,2)
-# Give us a nice vector of logical values
-big>small
-big=small
-# Oops--don't do this, reassigns big to small
-print(big)
+- The comparison operators `<`, `>`, `<=`, `>=`, `==`, and `!=` are used to compare values across values or vectors
 
+
+```{r}
+large_dose <- 1000
+small_dose <- 100
+large_dose > small_dose
+```
+
+---
+
+## Using Vectors
+```{r vectorcomp}
+bigger_values <-c(9,12,15,25)
+smaller_values<-c(9,3,4,2)
+# Give us a nice vector of logical values
+bigger_values>smaller_values
+bigger_values=smaller_values
+
+# Oops--don't do this, reassigns big to small
+print(bigger_values)
 ```
 - Comparison operators can be tricky, so to keep it straight never use `=` or `==` to assign anything, always use `<-`
 
-
+---
 
 ## Special operators (II)
 - The logical operators `|` (or) and `&` (and) can be used to combine two logical values and produce another logical value as the result. The operator `!` (not) negates a logical value. These operators allow complex conditions to be constructed.
+
 ```{r vectorlogic}
 foo<-c(NA,4,9,8.7)
 !is.na(foo) # Returns TRUE for non-NA
@@ -260,7 +260,7 @@ a <-foo[!is.na(foo)]
 a
 ```
 
-
+---
 ## Data Structures in R
 - R has a number of basic data classes as well as arbitrary specialized object types for various purposes
 - **vectors** are the basic data class in R and can be thought of as a single column of data (even a column of length 1)
@@ -270,28 +270,26 @@ a
 
 ---
 
-## R for Pharmacometricians
+## Working with data frames
+class(data)
 
-- Data Handling
-- Data Manipulation
-  - Some Frequent Tasks
-- Plotting
-- Reporting
+- Data frames are uniform in shape and information inside a column - this makes it easy to work with!
+- **[ ]**'s are an easy way to get to certain parts of a data frame
+- A data frame is written as: **data[row, column]**
 
-The rest of this presenation will be example-driven, and will often draw on the <x> dataset provided or the built-in R datasets
+```{r}
+data[2,]
+head(data[,2], n = 10)
+```
+
 
 ---
 ## Reading in Data
 
 Data from a variety of formats an be read into R - two of the most common are .tab and .csv
 
-Lets read in the dataset:
-```{r}
-data <- data(Theoph)
-head(data)
+# TODO: add more about reading csv
 ```
-
----
 We can quickly find additional information about the dataset
 ```{r}
 # What are the column names?
@@ -309,6 +307,7 @@ ncol(data)
 str(data)
 ```
 
+---
 
 We can get some summary statistics
 
@@ -317,41 +316,5 @@ summary(data)
 ```
 
 
----
-
-## Working with data frames
-class(data)
-
-- Data frames are uniform in shape and information inside a column - this makes it easy to work with!
-- **[ ]**'s are an easy way to get to certain parts of a data frame
-- A data frame is written as: **data[row, column]**
-
-```{r}
-data[2,]
-head(data[,2], n = 10)
-```
-
----
-## Columns using $
-
-Can easily call on or manipulate a single column via **dataframe$colname**
 
 
-```{r}
-head(data$AMT)
-unique(data$TIME)
-```
-
---- 
-## POP QUIZ
-
-How can easily check the number of unique individuals in the dataset using what we've learned so far?
-
----
-
-## ANSWER
-```{r}
-length(unique(data$CID))
-```
-
---- 

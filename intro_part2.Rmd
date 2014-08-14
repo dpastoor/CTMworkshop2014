@@ -1,57 +1,18 @@
 
 ---
-## Reading in Data
 
-Data from a variety of formats an be read into R - two of the most common are .tab and .csv
-
-Lets read in the dataset:
-```{r}
-data <- read.csv('./data/PopPKIVdata.csv', stringsAsFactors = F, skip = 3, header = T)
-head(data)
-```
-
----
-We can quickly find additional information about the dataset
-```{r}
-# What are the column names?
-names(data)
-# how long is the dataset - did everything read in correctly?
-nrow(data)
-# numer of columns
-ncol(data)
-```
-
----
-
-```{r}
-#What is the structure of each column
-str(data)
-```
-
-
----
-We can get some summary statistics
-
-```{r}
-summary(data)
-```
-
----
-## Summaries with table()
-
-
-```{r}
-table(data$ISM)
-table(data$ISM, data$DOSE)
-```
-
----
-## Working with data frames
-class(data)
+## Working with data frames and vectors
 
 - Data frames are uniform in shape and information inside a column - this makes it easy to work with!
+- each column in a dataframe is a vector
 - **[ ]**'s are an easy way to get to certain parts of a data frame
-- A data frame is written as: data[row, column]
+- A data frame is written as: **data[row, column]**
+
+
+---
+## Accessing information using **Indexing**
+
+The index is the way that the information can be referenced in the dataframe
 
 ```{r}
 data[2,]
@@ -59,6 +20,7 @@ head(data[,2], n = 16)
 ```
 
 ---
+
 ## Columns using $
 
 Can easily call on or manipulate a single column via **dataframe$colname**
@@ -84,6 +46,7 @@ length(unique(data$CID))
 --- 
 
 ## Subsetting
+
 Can easily subset rows of the data frame using the <font color="red">[ ]</font> in combination with <font color="red">$ </font>
 ```{r}
 ID1 <- data[data$CID == 1,]
