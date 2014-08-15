@@ -1,0 +1,29 @@
+---
+title: "ggplot2 handson"
+author: "Devin"
+date: "Thursday, August 14, 2014"
+output: html_document
+---
+
+## XY Plots
+
+2) Basic Concentration-Time plot (point and lines)
+3) make points/lines bigger
+4) add log transformation to y axis
+5) Add color by gender
+6) facet by race
+7) add mean conc-time profile and color red
+8) add two mean profiles (one for each gender)
+9) color by weight
+
+## Boxplots and Histograms
+* Histogram(s) of demographics
+  * add vertical line for median value
+* Boxplot cmax/AUC by gender
+
+## Eta-Eta plots
+Read in `EtaCov_base` dataset
+* Eta-eta scatter plot
+  * add loess fit
+* subset relationships with noticable trend for final plot
+

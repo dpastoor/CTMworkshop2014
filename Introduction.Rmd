@@ -1,3 +1,10 @@
+---
+title: "Introduction"
+author: "Devin"
+date: "Thursday, August 14, 2014"
+output: word_document
+---
+
 ## Framing the workshop
 
 ### Over the course of this workshop we want to use R to:
@@ -66,7 +73,7 @@ While we start the overview of R we wanted to make sure everyone has the necessa
 - The most important part of getting help is being able to ask your question with a reproducible example (i.e. some short simulated data and code that doesn't do what you want)
 - Like this:
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r eval=F,echo=TRUE, message=FALSE, warning=FALSE}
 Dose <- c(0.1, 0.1, 0.1)
 Weight <- c(52, "12", 38)
 #Trying to calculate amount to give for weight-based dosing

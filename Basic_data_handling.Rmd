@@ -1,3 +1,10 @@
+---
+title: "Basic Data Handling"
+author: "Devin"
+date: "Thursday, August 14, 2014"
+output: word_document
+---
+
 ```{r}
 library(PKPDdatasets)
 data <- sd_oral_richpk
@@ -14,6 +21,21 @@ Can easily call on or manipulate a single column via **dataframe$colname**
 ```{r}
 head(data$AMT)
 unique(data$TIME)
+```
+
+
+---
+## Adding Columns to a DF with **$**
+```{r}
+# find the mean age and add it to new column
+data$MEANAGE <- mean(data$AGE)
+head(data, n= 3)
+```
+
+```{r, include = FALSE}
+# can also delete columns
+data$MEANAGE <- NULL
+head(data, n = 3)
 ```
 
 ---
@@ -55,9 +77,9 @@ head(datasmall)
 
 ---
 ## Using both together
-```{r}
 
-keepcols <- c("CID", "TIME", "CONC", "AMT")
+```{r}
+keepcols <- c("ID", "TIME", "CONC", "AMT")
 ID1 <- data[data$CID == 1, keepcols]
 head(ID1)
 ```
@@ -106,26 +128,56 @@ changedata$AMT[changedata$AMT ==0] <- NA
 
 ---
 
+## Subsetting with `[` and `[[`
+
+`[` and `[[` are both useful for different tasks. In a general sense you use them to accomplish the following:
+
+|             | Simplifying         | Preserving                 |
+|-------------|---------------------|----------------------------|
+| Vector      | `x[[1]]`           | `x[1]`                     | 
+| List        | `x[[1]]`           | `x[1]`                     | 
+| Factor      | `x[1:4, drop = T]`  | `x[1:4]`                   | 
+| Array       | `x[1, ]`, `x[, 1]`  | `x[1, , drop = F]`, `x[, 1, drop = F]` | 
+| Data frame  | `x[, 1]`, `x[[1]]`  | `x[, 1, drop = F]`, `x[1]` | 
+
+---
+
+An easy way to think about it:
+
+>  "If list `x` is a train carrying objects, then `x[[5]]` is 
+> the object in car 5; `x[4:6]` is a train of cars 4-6." 
+
+--- @RLangTip on twitter
+
+
+---
 ## Understanding (logical) subsetting
 
-**Live demo**
+## Logical Subsetting
+One of the most common ways to subset rows is to use **logical subsetting**. 
 
----
-## Adding Columns to a DF with **$**
-```{r}
-# find the mean age and add it to new column
-data$MEANAGE <- mean(data$AGE)
-head(data, n= 3)
+Let's take a look
+```{r }
+Theoph[Theoph$Subject ==1,]
 ```
 
-```{r, include = FALSE}
-# can also delete columns
-data$MEANAGE <- NULL
-head(data, n = 3)
-```
+We just subset the Theoph dataframe to only give us back the rows in which Subject equals 1. How does R go about doing this? Logical subsetting!
 
 ---
-## Transforming data
+
+
+Notice what we get when we simply ask for `Theoph$Subject == 1`
+```{r }
+Theoph$Subject ==1
+```
+It doesn't give us back the values for the rows where subject equals one, rather, it gives us back a vector of `TRUE` or `FALSE` values.
+
+So, in reality, we are using the logical subsetting rules to extract the rows of the dataframe that come back `TRUE` from our logical query.
+
+
+
+---
+## Basic Data Transformation
 
 What if we wanted time to be in minutes rather than hours
 ```{r}

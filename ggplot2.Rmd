@@ -5,3 +5,16 @@ date: "Thursday, August 14, 2014"
 output: html_document
 ---
 
+
+
+## Data Checkout
+```{r}
+library(reshape2)
+m_data <- melt(data %>% select(ID,TIME, AMT, CONC, AGE, WEIGHT, DOSE), id.vars="ID")
+head(m_data)
+library(ggplot2)
+
+
+ggplot(m_data, aes(x = ID, y = value, group =ID)) + geom_point() + facet_wrap(~variable, scales="free")
+```
+
