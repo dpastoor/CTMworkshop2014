@@ -1,0 +1,32 @@
+---
+title: "Grouping, Summary Statistics, and Reshaping Data"
+author: "Devin"
+date: "Thursday, August 14, 2014"
+output: html_document
+---
+
+---
+
+## Reshaping Data
+
+There is an excellent package (library) called reshape2
+
+Let's load it and get some data to play with
+```{r}
+library(reshape2)
+keepcols <- c("ID", "TIME", "CONC")
+concTime <- data[data$CID < 10, keepcols]
+tail(concTime)
+```
+
+
+How can we make a table of concentrations by time for all ID's? (long to wide conversion)
+
+---
+```{r}
+molten <- melt(concTime, id.vars = c("TIME", "ID"), measure.vars = c("CONC"))
+head(molten)
+concTimeWide <- dcast(molten, TIME + variable ~ ID)
+head(concTimeWide, n = 4)
+```
+
