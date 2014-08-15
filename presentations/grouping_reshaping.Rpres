@@ -1,0 +1,106 @@
+grouping_reshaping
+========================================================
+author: Devin Pastoor
+date: 
+width:1400
+height: 900
+
+====================
+## One (summarization) package to rule them all?
+* built in functions like aggregate and the old (but still useful) package plyr make group summary statistics easy
+* **dplyr** makes everything a breeze
+
+====================
+## Key dplyr Functions
+* filter: keeps rows with matching criteria
+* summarize: do calculations *and* reduce resulting variables and values
+* mutate: do calculations *and* add them to existing data frame
+* arrange: ordering
+* select: picking columns by name
+
+#### wrapped with `%>%` and tied with a `group_by` bow
+
+
+====================
+# What does is look like
+
+```{r include=F}
+library(dplyr)
+library(PKPDdatasets)
+data <- sd_oral_richpk
+names(data) <- toupper(names(data))
+```
+
+```{r}
+data %>% 
+  group_by(ID) %>% 
+    summarize(cmax = max(CONC)) %>% 
+      head
+
+```
+
+
+=============================
+
+
+# Go to dplyr handson
+
+====================
+```{r, include =F}
+library(PKPDdatasets)
+data <- sd_oral_richpk
+names(data) <- toupper(names(data))
+```
+
+# Reshaping Data
+
+There is an excellent package (library) called reshape2
+
+```{r}
+library(reshape2)
+dat_10IDS <- data %>% filter(ID < 10)
+m_dat_10IDS <- melt(dat_10IDS %>% 
+                      select(ID,TIME, AMT, CONC, 
+                             AGE, WEIGHT, DOSE), 
+                    id.vars="ID")
+
+
+```
+
+===============================
+```{r}
+head(m_dat_10IDS, n = 15)
+```
+***
+```{r}
+tail(m_dat_10IDS, n = 15)
+```
+
+
+
+
+====================
+## What about long to wide
+How can we make a table of concentrations by time for all ID's? (long to wide conversion)
+
+```{r}
+molten <- melt(data %>% filter(ID < 6), id.vars = c("TIME", "ID"), measure.vars = c("CONC"))
+```
+
+====================
+```{r}
+head(molten)
+```
+***
+```{r}
+tail(molten)
+
+```
+
+======================
+
+
+```{r}
+concTimeWide <- dcast(molten, TIME + variable ~ ID)
+head(concTimeWide, n = 20)
+```

@@ -1,0 +1,175 @@
+Subsetting
+========================================================
+author: Devin
+width: 1400
+height: 900
+
+
+```{r, include=F}
+library(PKPDdatasets)
+data <- sd_oral_richpk
+names(data) <- toupper(names(data))
+```
+
+================
+
+## Accessing columns using $
+
+Can easily call on or manipulate a single column via **dataframe$colname**
+
+
+```{r}
+head(data$AMT)
+unique(data$TIME)
+```
+
+
+================
+## Adding Columns to a DF with **$**
+```{r}
+# find the mean age and add it to new column
+data$MEANAGE <- mean(data$AGE)
+head(data, n= 3)
+```
+
+```{r, include = FALSE}
+# can also delete columns
+data$MEANAGE <- NULL
+head(data, n = 3)
+```
+
+================
+## Accessing information using **Indexing**
+
+The index is the way that the information can be referenced in the dataframe
+
+* remember **df[row,column]**
+
+```{r}
+data[2,]
+head(data[,2], n = 16)
+```
+
+================ 
+
+## Subsetting
+
+Can easily subset rows of the data frame using the <font color="red">[ ]</font> in combination with <font color="red">$ </font>
+```{r}
+ID1 <- data[data$ID == 1,]
+ID1
+```
+
+================
+## Subsetting (II)
+Or can take only a subset of columns
+```{r}
+datasmall <- data[, c(1:4)]
+```
+
+or using the column names
+
+```{r}
+keepcols <- c("ID", "TIME", "CONC", "AMT")
+datasmall <- data[, keepcols]
+head(datasmall)
+```
+
+================
+## Using both together
+
+```{r}
+keepcols <- c("ID", "TIME", "CONC", "AMT")
+ID1 <- data[data$CID == 1, keepcols]
+head(ID1)
+```
+
+================
+## Multiple subsets
+
+You can also use the **&** and **|** operators to do multiple subsets at once
+
+Let's make a dataset with only males less than 40 years old
+
+```{r}
+youngmales <- data[data$ISM != 0 & data$AGE <= 40,]
+head(youngmales[!duplicated(youngmales$CID),])
+```
+
+================
+## Your Turn
+* Subset the dataset into males and females
+* Get the summary information for weight for:
+  * all individuals
+  * and males and females separately
+* Challenge:
+  * black females and asian males are there? subset out only those groups
+
+================
+## Challenge Answer
+```{r}
+head(data[(data$RACE == "Black" & data$GENDER == "Female") | (data$RACE == "Asian" & data$GENDER == "Male"),])
+```
+
+
+================
+## Subsetting to assign values
+
+What if we needed to change all the 0's in the AMT column to NA values
+```{r}
+# so we can keep the original dataset
+changedata <- data
+head(changedata, n = 3)
+changedata[changedata$AMT == 0, "AMT"] <- NA
+head(changedata, n = 3)
+## or
+changedata$AMT[changedata$AMT ==0] <- NA
+```
+
+================
+
+## Subsetting with `[` and `[[`
+
+`[` and `[[` are both useful for different tasks. In a general sense you use them to accomplish the following:
+
+|             | Simplifying         | Preserving                 |
+|---|---|---|
+| Vector      | `x[[1]]`           | `x[1]`                     | 
+| List        | `x[[1]]`           | `x[1]`                     | 
+| Factor      | `x[1:4, drop = T]`  | `x[1:4]`                   | 
+| Array       | `x[1, ]`, `x[, 1]`  | `x[1, , drop = F]`, `x[, 1, drop = F]` | 
+| Data frame  | `x[, 1]`, `x[[1]]`  | `x[, 1, drop = F]`, `x[1]` | 
+
+================
+
+An easy way to think about it:
+
+>  "If list `x` is a train carrying objects, then `x[[5]]` is 
+> the object in car 5; `x[4:6]` is a train of cars 4-6." 
+
+--- @RLangTip on twitter
+
+
+================
+## Understanding (logical) subsetting
+
+## Logical Subsetting
+
+```{r }
+Theoph[Theoph$Subject ==1,]
+```
+
+We just subset the Theoph dataframe to only give us back the rows in which Subject equals 1. How does R go about doing this? Logical subsetting!
+
+================
+
+
+Notice what we get when we simply ask for `Theoph$Subject == 1`
+```{r }
+head(Theoph$Subject ==1, n = 50)
+```
+It doesn't give us back the values for the rows where subject equals one, rather, it gives us back a vector of `TRUE` or `FALSE` values.
+
+So, in reality, we are using the logical subsetting rules to extract the rows of the dataframe that come back `TRUE` from our logical query.
+
+
