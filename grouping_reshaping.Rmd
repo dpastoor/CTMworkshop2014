@@ -6,6 +6,31 @@ output: html_document
 ---
 
 ---
+## One (summarization) package to rule them all?
+* built in functions like aggregate and the old (but still useful) package plyr make group summary statistics easy
+* **dplyr** makes everything a breeze
+
+---
+## Functions
+* filter: keeps rows with matching criteria
+* summarize: do calculations *and* reduce resulting variables and values
+* mutate: do calculations *and* add them to existing data frame
+* arrange: ordering
+* select: picking columns by name
+
+#### wrapped with `%>%` and tied with a `group_by` bow
+
+---
+# hands on goodness
+
+
+
+---
+```{r, include =F}
+library(PKPDdatasets)
+data <- sd_oral_richpk
+names(data) <- toupper(names(data))
+```
 
 ## Reshaping Data
 
@@ -14,8 +39,7 @@ There is an excellent package (library) called reshape2
 Let's load it and get some data to play with
 ```{r}
 library(reshape2)
-keepcols <- c("ID", "TIME", "CONC")
-concTime <- data[data$CID < 10, keepcols]
+concTime <- data %>% filter(ID < 10) %>% select(ID, TIME, CONC)
 tail(concTime)
 ```
 
@@ -26,6 +50,7 @@ How can we make a table of concentrations by time for all ID's? (long to wide co
 ```{r}
 molten <- melt(concTime, id.vars = c("TIME", "ID"), measure.vars = c("CONC"))
 head(molten)
+tail(molten)
 concTimeWide <- dcast(molten, TIME + variable ~ ID)
 head(concTimeWide, n = 4)
 ```

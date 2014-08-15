@@ -1,0 +1,25 @@
+---
+title: "dplyr_handson"
+author: 
+date: "Thursday, August 14, 2014"
+output: word_document
+---
+
+Start by reading in the richPK dataset or loading it from `PKPDdatasets` (sd_oral_richpk)
+
+Using dplyr 'verbs' and `%>%` to chain commands together
+
+1) create a new 'demographic' dataset by subsetting out only one observation per id 
+  * `hint: !duplicated`
+2) give basic data summary for all individuals using `summary`
+3) summarize the demographic dataset by:
+ * mean WT by gender
+ * range of ages by RACE
+4) Using the original dataset add a cmax column
+
+
+## Pause for Control Flow Mini-lecture
+
+5) Add a HIGHCMAX column that flags all individuals over the 90th percentile
+6) create an ISASIAN with a numeric (1/0) flag
+7) BONUS: Create a numeric race column where caucasian = 1, Asian = 2, Black = 3, and hispanic and other are merged into 4

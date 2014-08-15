@@ -4,6 +4,11 @@ author: "Devin"
 date: "Thursday, August 14, 2014"
 output: word_document
 ---
+```{r}
+library(PKPDdatasets)
+data <- sd_oral_richpk
+names(data) <- toupper(names(data))
+```
 
 
 ---
