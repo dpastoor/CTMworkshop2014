@@ -137,13 +137,18 @@ head(datasmall)
 
 ```r
 keepcols <- c("ID", "TIME", "CONC", "AMT")
-ID1 <- data[data$CID == 1, keepcols]
+ID1 <- data[data$ID == 1 | data$ID == 5, c("ID", "TIME", "CONC", "AMT")]
 head(ID1)
 ```
 
 ```
-[1] ID   TIME CONC AMT 
-<0 rows> (or 0-length row.names)
+  ID TIME   CONC  AMT
+1  1 0.00  0.000 5000
+2  1 0.25  8.613    0
+3  1 0.50 19.437    0
+4  1 1.00 34.007    0
+5  1 2.00 30.229    0
+6  1 3.00 31.300    0
 ```
 
 ================

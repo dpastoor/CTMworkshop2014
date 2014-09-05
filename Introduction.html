@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Framing the workshop</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+
+</head>
+
+<body>
+<h2>Framing the workshop</h2>
+
+<h3>Over the course of this workshop we want to use R to:</h3>
+
+<ul>
+<li>Load some data</li>
+<li>calculate basic summary statistics</li>
+<li>visualize the data</li>
+<li>prepare the data for modeling</li>
+<li>modify the data to use for simulations</li>
+</ul>
+
+<p>To do that we&#39;ll need to learn some <strong>programming</strong></p>
+
+<h3>Objectives</h3>
+
+<ul>
+<li>Explain what a library/package is, and what they are used for.</li>
+<li>Load an R library and use the things it contains.</li>
+<li>Learn where to get help</li>
+<li>Read tabular data from a file into a program.</li>
+<li>Assign values to variables.</li>
+<li>Learn about data types</li>
+</ul>
+
+<h2>Getting Started</h2>
+
+<p>While we start the overview of R we wanted to make sure everyone has the necessary components set-up for R use. Please open the <strong>setup.R</strong> file and we will show everyone how to run the code. If you have any problems please put up a <strong>RED</strong> sticky and a helper will come assist</p>
+
+<hr/>
+
+<h2>R Vocabulary</h2>
+
+<ul>
+<li><strong>packages</strong> are add on features to R that include data, new functions and methods, and extended capabilities. Think of them as &ldquo;apps&#39;&#39; on your phone. We&#39;ve already installed several!</li>
+<li><strong>terminal</strong> this is the main window of R where you enter commands</li>
+<li><strong>scripts</strong> these are where you store commands to be run in the terminal later, like syntax files in SPSS or .do files in Stata</li>
+<li><strong>functions</strong> commands that do something to an object in R</li>
+<li><strong>data frame</strong> the main data structure used in data analysis, an object with rows and columns that includes numbers, factors, and other data types</li>
+<li><strong>workspace</strong> the working memory of R where all objects are stored</li>
+<li><strong>vector</strong> the basic unit of data in R</li>
+<li><strong>symbols</strong> used to name and store objects or to designate operations/functions</li>
+<li><strong>attributes</strong> determine how functions act on objects</li>
+</ul>
+
+<hr/>
+
+<h2>Components of an R Setup</h2>
+
+<ul>
+<li><strong>R</strong> - R works in the command line of any OS, but also comes with a basic GUI to operate on its own in Windows and Mac <a href="http://cran.r-project.org/">download</a></li>
+<li><strong>RStudio</strong> - a much better way to work in R that allows editing of scripts, operation of R, viewing of the workspace, and R help all on one screen <a href="http://rstudio.com/">download</a></li>
+</ul>
+
+<hr/>
+
+<h2>Let&#39;s Look at RStudio</h2>
+
+<ul>
+<li>RStudio has made R more accessible and easy to use than ever!</li>
+<li>4 panels, various tabs</li>
+<li>Help, plots, file structure</li>
+<li>Workspace, history, version control</li>
+<li>Working files</li>
+<li>The R Console</li>
+</ul>
+
+<hr/>
+
+<h2>Self-help</h2>
+
+<ul>
+<li>Let&#39;s see, type: <code>?summary</code></li>
+<li>For tricky questions, funky error messages (there are many), and other issues, use Google (include &quot;in R&rdquo; to the end of your query)</li>
+<li><a href="http://www.stackoverflow.com">StackOverflow</a> has become a great resource with many questions for many specific packages in R, and a rating system for answers</li>
+<li>A number of R Core members contribute there</li>
+</ul>
+
+<hr/>
+
+<h2>Self-help (2)</h2>
+
+<ul>
+<li>Sometimes R Help can be a bit prickly and unfriendly&hellip;</li>
+<li>The most important part of getting help is being able to ask your question with a reproducible example (i.e. some short simulated data and code that doesn&#39;t do what you want)</li>
+<li>Like this:</li>
+</ul>
+
+<pre><code class="r">Dose &lt;- c(0.1, 0.1, 0.1)
+Weight &lt;- c(52, &quot;12&quot;, 38)
+#Trying to calculate amount to give for weight-based dosing
+Dose*Weight
+</code></pre>
+
+<p>In this case, someone could replicate it, allowing them to notice that the &#39;12&#39; is a character rather than numeric and point it out.</p>
+
+<ul>
+<li>For R Help etiquette (for the tough problems) see <a href="http://adv-r.had.co.nz/Reproducibility.html">the great advice here</a></li>
+</ul>
+
+<hr/>
+
+<h2>R As A Calculator</h2>
+
+<pre><code class="r">2+2 ## add numbers
+2*pi #multiply by a constant
+7+runif(1,min=0,max=1) #add a random variable
+4^4 # powers
+sqrt(4^4) # functions
+</code></pre>
+
+<hr/>
+
+<h2>Arithmetic Operators</h2>
+
+<ul>
+<li>In addition to the obvious <code>+</code> <code>-</code> <code>=</code> <code>/</code> <code>*</code> and exponential <code>^</code>, there is also integer division <code>%/%</code> and remainder in integer division (known as modulo arithmetic) <code>%%</code></li>
+</ul>
+
+<pre><code class="r">2+2
+2/2
+2*2
+2^2
+2==2
+23 %/% 2 
+23 %% 2
+</code></pre>
+
+<h2>Note: modulo&#39;s are great for simulation read-out updates</h2>
+
+<h2>Other Key Symbols</h2>
+
+<ul>
+<li><code>&lt;-</code> is the assignment operator, it declares something is something else</li>
+</ul>
+
+<pre><code class="r">ID &lt;-3
+ID
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">TRT &lt;- &quot;placebo&quot;
+TRT
+</code></pre>
+
+<pre><code>## [1] &quot;placebo&quot;
+</code></pre>
+
+<hr/>
+
+<h2>Other Key Symbols (II)</h2>
+
+<ul>
+<li><code>:</code> is the sequence operator</li>
+</ul>
+
+<pre><code class="r">1:10
+</code></pre>
+
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10
+</code></pre>
+
+<pre><code class="r"># it increments by one
+a&lt;-100:120
+a
+</code></pre>
+
+<pre><code>##  [1] 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116
+## [18] 117 118 119 120
+</code></pre>
+
+<ul>
+<li><strong>This is handy</strong></li>
+</ul>
+
+<hr/>
+
+<h2>Sequence and Repeat</h2>
+
+<p>Can have more fine control</p>
+
+<pre><code class="r">#seq(from #, to #, by increment)
+seq(0, 24, 0.5)
+</code></pre>
+
+<pre><code>##  [1]  0.0  0.5  1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5  5.0  5.5  6.0  6.5
+## [15]  7.0  7.5  8.0  8.5  9.0  9.5 10.0 10.5 11.0 11.5 12.0 12.5 13.0 13.5
+## [29] 14.0 14.5 15.0 15.5 16.0 16.5 17.0 17.5 18.0 18.5 19.0 19.5 20.0 20.5
+## [43] 21.0 21.5 22.0 22.5 23.0 23.5 24.0
+</code></pre>
+
+<pre><code class="r">#rep (values to repeat, # of times to repeat, ...)
+rep(c(&#39;a&#39;, &#39;b&#39;), 3)
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot;
+</code></pre>
+
+<hr/>
+
+<h2>Comments in R</h2>
+
+<ul>
+<li><strong>#</strong> denotes a comment in R</li>
+<li>Anything after the <strong>#</strong> is not evaluated and ignored in R</li>
+<li>This is handy for making things reproducible</li>
+</ul>
+
+<pre><code class="r"># weight of female adults patients in kg
+weight &lt;- c(46.3, 51, 42)
+</code></pre>
+
+<hr/>
+
+<h2>R Advanced Math</h2>
+
+<ul>
+<li>R also supports advanced mathematical features and expressions</li>
+<li>R can take integrals and derivatives and express complex functions</li>
+<li><p>Easiest of all, R can generate distributions of data very easily</p>
+
+<ul>
+<li>e.g. <code>rnorm(100)</code> or <code>rbinom(100)</code></li>
+</ul></li>
+<li><p>This comes in handy when writing examples and building analyses because it is trivial to generate a synthetic piece of data to use as an example</p></li>
+<li><p>Try typing <code>hist(rnorm(10000))</code></p></li>
+</ul>
+
+<hr/>
+
+<h2>Using the Workspace</h2>
+
+<ul>
+<li>To do more we need to learn how to manipulate the &#39;workspace&#39;.</li>
+<li>This includes all the vectors, datasets, and functions stored in memory.</li>
+<li>All R objects are stored in the memory of the computer, limiting the available space for calculation to the size of the RAM on your machine.</li>
+<li>R makes organizing the workspace easy.</li>
+</ul>
+
+<hr/>
+
+<h2>Using the Workspace (2)</h2>
+
+<pre><code>x&lt;-5 #store a variable with &lt;-
+x    #print the variable
+z&lt;-3 
+ls() #list all variables
+ls.str() #list and describe variables
+rm(x)    # delete a variable
+ls()
+</code></pre>
+
+<p>You can also also visually see what is in your workspace in Rstudio</p>
+
+<hr/>
+
+<h2>Concatenating with <code>c</code></h2>
+
+<ul>
+<li>So what does <strong>c</strong> do?</li>
+</ul>
+
+<pre><code class="r">A&lt;-c(3,4)
+print(A)
+</code></pre>
+
+<pre><code>## [1] 3 4
+</code></pre>
+
+<ul>
+<li><code>c</code> stands for concatenate and allows vectors to have multiple elements</li>
+<li>If you ever need two elements in a vector, you need to wrap it up in <code>c</code>, which is one of the most used functions you will ever use</li>
+<li><code>c</code> is important to put any vector together, but remember that <em>objects within a vector must all be of the same type</em></li>
+</ul>
+
+<hr/>
+
+<h2>Some Other Language <del>Bugs</del> Features</h2>
+
+<ul>
+<li>R is maddeningly inconsistent in it&#39;s naming conventions
+
+<ul>
+<li>Some functions are <code>camelCase</code>; others <code>are.dot.separated</code>; others <code>use_underscores</code></li>
+<li>Function results are stored in a variety of ways across function implementations</li>
+<li>R has multiple graphics packages that different functions use for default plot construction (<code>base</code>, <code>grid</code>, <code>lattice</code>, and <code>ggplot2</code>)</li>
+<li>R has multiple packages and functions to do the same analysis as well, though some standardization has started to occur</li>
+<li>Be flexible and be aware of R&#39;s flexibility</li>
+</ul></li>
+</ul>
+
+<hr/>
+
+<h2>Special Operators</h2>
+
+<ul>
+<li>The comparison operators <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>==</code>, and <code>!=</code> are used to compare values across values or vectors</li>
+</ul>
+
+<pre><code class="r">large_dose &lt;- 1000
+small_dose &lt;- 100
+large_dose &gt; small_dose
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<hr/>
+
+<h2>Using Vectors</h2>
+
+<pre><code class="r">bigger_values &lt;-c(9,12,15,25)
+smaller_values&lt;-c(9,3,4,2)
+# Give us a nice vector of logical values
+bigger_values&gt;smaller_values
+</code></pre>
+
+<pre><code>## [1] FALSE  TRUE  TRUE  TRUE
+</code></pre>
+
+<pre><code class="r">bigger_values=smaller_values
+
+# Oops--don&#39;t do this, reassigns big to small
+print(bigger_values)
+</code></pre>
+
+<pre><code>## [1] 9 3 4 2
+</code></pre>
+
+<ul>
+<li>Comparison operators can be tricky, so to keep it straight never use <code>=</code> or <code>==</code> to assign anything, always use <code>&lt;-</code></li>
+</ul>
+
+<hr/>
+
+<h2>Special operators (II)</h2>
+
+<ul>
+<li>The logical operators <code>|</code> (or) and <code>&amp;</code> (and) can be used to combine two logical values and produce another logical value as the result. The operator <code>!</code> (not) negates a logical value. These operators allow complex conditions to be constructed.</li>
+</ul>
+
+<pre><code class="r">foo&lt;-c(NA,4,9,8.7)
+!is.na(foo) # Returns TRUE for non-NA
+</code></pre>
+
+<pre><code>## [1] FALSE  TRUE  TRUE  TRUE
+</code></pre>
+
+<pre><code class="r">a &lt;-foo[!is.na(foo)]
+a
+</code></pre>
+
+<pre><code>## [1] 4.0 9.0 8.7
+</code></pre>
+
+<hr/>
+
+<h2>Data Structures in R</h2>
+
+<h2>Data Structures</h2>
+
+<p>R has a number of ways of storing information. The quick way to visualize the possibilities is as such:</p>
+
+<table><thead>
+<tr>
+<th></th>
+<th>Homogeneous</th>
+<th>Heterogeneous</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1d</td>
+<td>Atomic vector</td>
+<td>List</td>
+</tr>
+<tr>
+<td>2d</td>
+<td>Matrix</td>
+<td>Data frame</td>
+</tr>
+<tr>
+<td>nd</td>
+<td>Array</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<p><strong>Homogeneous</strong> - all elements must be of the same type 
+<strong>Heterogeneous</strong> - elements can be of different type</p>
+
+<hr/>
+
+<h2>Data types</h2>
+
+<p>A <strong>Type/Mode</strong> indicates how R stores the information in memory</p>
+
+<ul>
+<li>numeric</li>
+<li>double</li>
+<li>integer</li>
+<li>logical</li>
+<li>character</li>
+<li>list of pointers</li>
+<li>function</li>
+</ul>
+
+<hr/>
+
+<ul>
+<li>R has a number of basic data classes as well as arbitrary specialized object types for various purposes</li>
+<li><strong>vectors</strong> are the basic data class in R and can be thought of as a single column of data (even a column of length 1)</li>
+<li><strong>matrices and arrays</strong> are rows and columns of all the same mode data</li>
+<li><strong>data frames</strong> are rows and columns where the columns can represent different data types</li>
+<li><strong>lists</strong> are arbitrary combinations of disparate object types in R</li>
+</ul>
+
+<p>There are two useful functions for handling vectors: <code>is.*</code> and <code>as.*</code></p>
+
+<ul>
+<li><code>is.*</code> is a testing function that returns TRUE or FALSE</li>
+<li><code>as.*</code> is a coercion function - it attempts to convert the input to the requested data structure</li>
+</ul>
+
+<hr/>
+
+<h2>Working with Vectors</h2>
+
+<pre><code class="r"># example vector
+numeric_vector &lt;- c(1, 2, 3)
+
+# access contents by calling the vector by name
+numeric_vector
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+<pre><code class="r"># see vector type
+typeof(numeric_vector)
+</code></pre>
+
+<pre><code>## [1] &quot;double&quot;
+</code></pre>
+
+<pre><code class="r"># often more useful than typeof
+str(numeric_vector)
+</code></pre>
+
+<pre><code>##  num [1:3] 1 2 3
+</code></pre>
+
+<pre><code class="r"># check length
+length(numeric_vector)
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<hr/>
+
+<h2>Coercion</h2>
+
+<p>For homogeneous vectors, if you attempt to combine elements of different types, it will pick the class of the first element and coerce all others to that type</p>
+
+<pre><code class="r">vec &lt;- c(&quot;2&quot;, 3, 4)
+2 &gt; vec
+</code></pre>
+
+<pre><code>## [1] FALSE FALSE FALSE
+</code></pre>
+
+<pre><code class="r"># logical TRUE == 1
+vec &lt;- c(&quot;2&quot;, 1, 4)
+2 &gt; vec
+</code></pre>
+
+<pre><code>## [1] FALSE  TRUE FALSE
+</code></pre>
+
+<h2>when might you run into this in a PM-style dataset?</h2>
+
+<hr/>
+
+<h2>Working with data frames</h2>
+
+<p>class(data)</p>
+
+<ul>
+<li>Data frames are uniform in shape and information inside a column - this makes it easy to work with!</li>
+<li><strong>[ ]</strong>&#39;s are an easy way to get to certain parts of a data frame</li>
+<li>A data frame is written as: <strong>data[row, column]</strong></li>
+<li>each column is a vector (homogenous)</li>
+<li>a dataframe is &ldquo;essentially&rdquo; a list with equal length columns</li>
+</ul>
+
+<hr/>
+
+<h1>PULSE CHECK</h1>
+
+<hr/>
+
+<h2>Reading in Data</h2>
+
+<p>Data from a variety of formats an be read into R - two of the most common are .tab and .csv</p>
+
+<p>Any text with a separator can be passed into read.csv or read.table regardless of file ending (.sim, etc)</p>
+
+<ul>
+<li><code>read.csv</code></li>
+<li><code>read.table</code></li>
+</ul>
+
+<hr/>
+
+<pre><code>## Let&#39;s read in some data
+We can quickly find additional information about the dataset
+
+```r
+library(PKPDdatasets)
+</code></pre>
+
+<pre><code>## Error: there is no package called &#39;PKPDdatasets&#39;
+</code></pre>
+
+<pre><code class="r">data &lt;- read.csv(&quot;datasets//richPK.csv&quot;)
+# What are the column names?
+names(data)
+</code></pre>
+
+<pre><code>## [1] &quot;ID&quot;     &quot;Time&quot;   &quot;Amt&quot;    &quot;Conc&quot;   &quot;Age&quot;    &quot;Weight&quot; &quot;Gender&quot; &quot;Race&quot;  
+## [9] &quot;Dose&quot;
+</code></pre>
+
+<pre><code class="r"># how long is the dataset - did everything read in correctly?
+nrow(data)
+</code></pre>
+
+<pre><code>## [1] 600
+</code></pre>
+
+<pre><code class="r"># numer of columns
+ncol(data)
+</code></pre>
+
+<pre><code>## [1] 9
+</code></pre>
+
+<hr/>
+
+<pre><code class="r">#What is the structure of each column
+str(data)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    600 obs. of  9 variables:
+##  $ ID    : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Time  : num  0 0.25 0.5 1 2 3 4 6 8 12 ...
+##  $ Amt   : int  5000 0 0 0 0 0 0 0 0 0 ...
+##  $ Conc  : num  0 8.61 19.44 34.01 30.23 ...
+##  $ Age   : num  56.1 56.1 56.1 56.1 56.1 ...
+##  $ Weight: num  94.2 94.2 94.2 94.2 94.2 ...
+##  $ Gender: Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Race  : Factor w/ 5 levels &quot;Asian&quot;,&quot;Black&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ Dose  : int  5000 5000 5000 5000 5000 5000 5000 5000 5000 5000 ...
+</code></pre>
+
+<pre><code class="r"># capitalize all the names
+names(data) &lt;- toupper(names(data))
+names(data)
+</code></pre>
+
+<pre><code>## [1] &quot;ID&quot;     &quot;TIME&quot;   &quot;AMT&quot;    &quot;CONC&quot;   &quot;AGE&quot;    &quot;WEIGHT&quot; &quot;GENDER&quot; &quot;RACE&quot;  
+## [9] &quot;DOSE&quot;
+</code></pre>
+
+<hr/>
+
+<p>We can get some summary information</p>
+
+<pre><code class="r">summary(data)
+</code></pre>
+
+<pre><code>##        ID            TIME             AMT            CONC      
+##  Min.   : 1.0   Min.   : 0.000   Min.   :   0   Min.   :  0.0  
+##  1st Qu.:13.0   1st Qu.: 0.875   1st Qu.:   0   1st Qu.: 13.3  
+##  Median :25.5   Median : 3.500   Median :   0   Median : 29.9  
+##  Mean   :25.5   Mean   : 6.396   Mean   : 417   Mean   : 32.8  
+##  3rd Qu.:38.0   3rd Qu.: 9.000   3rd Qu.:   0   3rd Qu.: 48.0  
+##  Max.   :50.0   Max.   :24.000   Max.   :5000   Max.   :130.7  
+##       AGE           WEIGHT        GENDER           RACE          DOSE     
+##  Min.   :38.3   Min.   :54.9   Female:180   Asian    : 84   Min.   :5000  
+##  1st Qu.:46.6   1st Qu.:64.2   Male  :420   Black    :144   1st Qu.:5000  
+##  Median :50.8   Median :71.2                Caucasian:156   Median :5000  
+##  Mean   :50.5   Mean   :71.0                Hispanic : 96   Mean   :5000  
+##  3rd Qu.:54.5   3rd Qu.:76.9                Other    :120   3rd Qu.:5000  
+##  Max.   :60.6   Max.   :94.2                                Max.   :5000
+</code></pre>
+
+<hr/>
+
+<h1>Your Turn</h1>
+
+<p>Using the provided <code>R cheatsheet</code> what commands would likely help you solve the following</p>
+
+<ul>
+<li>How many rows are in the dataset</li>
+<li>The number of <em>unique</em> IDs</li>
+<li>The <em>range</em> of ages</li>
+</ul>
+
+</body>
+
+</html>
+

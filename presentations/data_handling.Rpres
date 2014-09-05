@@ -80,7 +80,7 @@ head(datasmall)
 
 ```{r}
 keepcols <- c("ID", "TIME", "CONC", "AMT")
-ID1 <- data[data$CID == 1, keepcols]
+ID1 <- data[data$ID == 1 | data$ID == 5, c("ID", "TIME", "CONC", "AMT")]
 head(ID1)
 ```
 

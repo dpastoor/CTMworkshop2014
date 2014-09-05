@@ -7,19 +7,102 @@ output: word_document
 
 Start by reading in the richPK dataset or loading it from `PKPDdatasets` (sd_oral_richpk)
 
+```{r}
+rich_pk <- read.csv("datasets//richPK.csv")
+```
+
 Using dplyr 'verbs' and `%>%` to chain commands together
+```{r}
+library(dplyr)
+filter(rich_pk, ID==1)
+```
+
 
 1) create a new 'demographic' dataset by subsetting out only one observation per id 
+
+```{r}
+demog_rich_pk <- rich_pk %>% filter(!duplicated(ID)) %>% select(-Time,-Amt, -Conc)
+```
+
+
+
   * `hint: !duplicated`
 2) give basic data summary for all individuals using `summary`
+
+```{r}
+demog_rich_pk %>% summary()
+```
+
 3) summarize the demographic dataset by:
  * mean WT by gender
+ 
+```{r}
+names(demog_rich_pk) <- toupper(names(demog_rich_pk))
+demog_rich_pk %>% group_by(GENDER) %>% 
+  summarize(meanWT = mean(WEIGHT),
+            meanAGE = mean(AGE))
+```
+
  * range of ages by RACE
+ 
+```{r}
+demog_rich_pk %>% group_by(RACE) %>% summarize(minAGE = min(AGE),
+                                               maxAGE = max(AGE))
+```
 4) Using the original dataset add a cmax column
+
+
+```{r}
+rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc))
+```
 
 
 ## Pause for Control Flow Mini-lecture
 
+ifelse(CHECK, WHAT TO DO IF TRUE, WHAT TO DO IF FALSE)
+
+```{r}
+rich_pk %>% mutate(ISMALE = ifelse(Gender == "Male", 1, 0))
+
+rich_pk %>% mutate(RACENM = ifelse(Race == "Black", 1, 
+                                   ifelse(Race == "Asian", 2, 3)))
+
+demog_rich_pk %>% group_by(GENDER, RACE) %>% summarize(meanWT = mean(WEIGHT))
+```
+
+
+
+
 5) Add a HIGHCMAX column that flags all individuals over the 90th percentile
+quantile
+
+```{r}
+rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc), HIGHCMAX = ifelse(cmax > quantile(cmax, 0.9), 1, 0))
+
+cmax_df <- rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc)) 
+
+quantile(cmax_df$cmax, 0.9)
+
+
+cmax <-rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc)) %>% ungroup() %>% mutate(HIGHCMAX = ifelse(cmax > quantile(cmax, 0.9), 1, 0))
+
+
+cmax %>%summarize(percentabove = mean(HIGHCMAX))
+```
+
+
 6) create an ISASIAN with a numeric (1/0) flag
+
+```{r}
+rich_pk %>% mutate(ISASIAN = ifelse(Race == "Asian", 1, 0))
+```
+
 7) BONUS: Create a numeric race column where caucasian = 1, Asian = 2, Black = 3, and hispanic and other are merged into 4
+
+```{r}
+rich_pk %>% mutate(RACENM = ifelse(Race == "Caucasian", 1, 
+                                   ifelse(Race == "Asian", 2, 
+                                          ifelse(Race == "Black", 3, 4)))
+
+```
+
