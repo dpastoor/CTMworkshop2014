@@ -22,6 +22,7 @@ filter(rich_pk, ID==1)
 
 ```{r}
 demog_rich_pk <- rich_pk %>% filter(!duplicated(ID)) %>% select(-Time,-Amt, -Conc)
+head(demog_rich_pk, n = 10)
 ```
 
 
@@ -34,7 +35,7 @@ demog_rich_pk %>% summary()
 ```
 
 3) summarize the demographic dataset by:
- * mean WT by gender
+ * mean WT and AGE by gender
  
 ```{r}
 names(demog_rich_pk) <- toupper(names(demog_rich_pk))
@@ -53,56 +54,44 @@ demog_rich_pk %>% group_by(RACE) %>% summarize(minAGE = min(AGE),
 
 
 ```{r}
-rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc))
+rich_pk_cmax <- rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc))
+rich_pk_cmax %>% filter(!duplicated(ID)) %>% head(n = 10)
 ```
-
-
-## Pause for Control Flow Mini-lecture
-
-ifelse(CHECK, WHAT TO DO IF TRUE, WHAT TO DO IF FALSE)
-
-```{r}
-rich_pk %>% mutate(ISMALE = ifelse(Gender == "Male", 1, 0))
-
-rich_pk %>% mutate(RACENM = ifelse(Race == "Black", 1, 
-                                   ifelse(Race == "Asian", 2, 3)))
-
-demog_rich_pk %>% group_by(GENDER, RACE) %>% summarize(meanWT = mean(WEIGHT))
-```
-
-
 
 
 5) Add a HIGHCMAX column that flags all individuals over the 90th percentile
 quantile
 
 ```{r}
-rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc), HIGHCMAX = ifelse(cmax > quantile(cmax, 0.9), 1, 0))
 
-cmax_df <- rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc)) 
+## wrong way!! notice all HIGHCMAX values are flagged the same
+wrong <- rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc), HIGHCMAX = ifelse(cmax > quantile(cmax, 0.9), 1, 0))
 
-quantile(cmax_df$cmax, 0.9)
+wrong %>% filter(!duplicated(ID)) %>% head(n = 10)
 
-
+# we need to ungroup the grouping by ID before calculating the quantile!
 cmax <-rich_pk %>% group_by(ID) %>% mutate(cmax = max(Conc)) %>% ungroup() %>% mutate(HIGHCMAX = ifelse(cmax > quantile(cmax, 0.9), 1, 0))
 
+cmax %>% filter(!duplicated(ID)) %>% head(n = 10)
 
-cmax %>%summarize(percentabove = mean(HIGHCMAX))
+# check to see the proportion individuals flagged
+cmax %>% filter(!duplicated(ID)) %>% summarize(proportionabove = mean(HIGHCMAX))
 ```
 
 
 6) create an ISASIAN with a numeric (1/0) flag
 
 ```{r}
-rich_pk %>% mutate(ISASIAN = ifelse(Race == "Asian", 1, 0))
+isasian <- rich_pk %>% mutate(ISASIAN = ifelse(Race == "Asian", 1, 0))
+isasian %>% filter(!duplicated(ID)) %>% head(n = 10)
 ```
 
 7) BONUS: Create a numeric race column where caucasian = 1, Asian = 2, Black = 3, and hispanic and other are merged into 4
 
 ```{r}
-rich_pk %>% mutate(RACENM = ifelse(Race == "Caucasian", 1, 
+raceflg <- rich_pk %>% mutate(RACENM = ifelse(Race == "Caucasian", 1, 
                                    ifelse(Race == "Asian", 2, 
-                                          ifelse(Race == "Black", 3, 4)))
-
+                                          ifelse(Race == "Black", 3, 4))))
+raceflg %>% filter(!duplicated(ID)) %>% head(n = 10)
 ```
 
