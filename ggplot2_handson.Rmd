@@ -2,7 +2,7 @@
 title: "ggplot2 handson"
 author: "Devin"
 date: "Thursday, August 14, 2014"
-output: html_document
+output: word_document
 ---
 
 ## XY Plots
@@ -12,6 +12,7 @@ rich_data <- read.csv("datasets//richPK.csv")
 names(rich_data) <- toupper(names(rich_data))
 library(ggplot2)
 library(dplyr)
+library(PKPDmisc)
 
 mean_ct <- rich_data %>% group_by(TIME) %>% summarize(CONC = mean(CONC)) 
 
@@ -22,7 +23,7 @@ p_conc_time <- ggplot(data = rich_data,
   geom_line() + 
   geom_point(size=2.5) + 
   geom_line(data = mean_ct, 
-            aes(x = TIME, y = CONC), 
+            aes(x = TIME, y = CONC, group=NULL), 
             size = 2,  color = "red") + 
   xlab("Time (hours)") +
   ylab("Concentration (mg/L)")
@@ -35,33 +36,161 @@ p_conc_time + scale_y_log10()
 
 p_conc_time + facet_wrap(~RACE) + base_theme_obs()
 
-library(PKPDmisc)
 ```
 
-Histograms
-```{r}
-ggplot(data = rich_data, aes(x = WEIGHT)) + geom_histogram(binwidth= 4, color="black", fill="white")
 
-?Theoph
-```
 
 2) Basic Concentration-Time plot (point and lines)
+```{r}
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID)) + 
+  geom_line() + 
+  geom_point()
+```
+
 3) make points/lines bigger
+```{r}
+
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID)) + 
+  geom_line(size = 1.25) + # add size
+  geom_point(size = 3)  # add size control
+```
+
 4) add log transformation to y axis
+```{r}
+
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID)) + 
+  geom_line(size = 1.25) + 
+  geom_point(size = 3) + 
+  scale_y_log10() # add scale
+```
 5) Add color by gender
+```{r}
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID, color = GENDER)) + 
+  geom_line(size = 1.25) + 
+  geom_point(size = 3) 
+```
+
 6) facet by race
+```{r}
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID, color = GENDER)) + 
+  geom_line(size = 1.25) + 
+  geom_point(size = 3) +
+  facet_wrap(~RACE) # use facet_wrap or facet_grid
+```
+
 7) add mean conc-time profile and color red
+```{r}
+
+p_conc_time <- ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID)) + 
+  geom_line() + 
+  geom_point(size=2.5) 
+
+# calculate mean concentration time profile
+mean_ct <- rich_data %>% group_by(TIME) %>% summarize(CONC = mean(CONC)) 
+
+p_conc_time + 
+  # add new line and specify new data to draw this line
+  geom_line(data = mean_ct, 
+            #don't forget group=NULL since will be looking to group by ID due to original specification in the base plot
+            aes(x = TIME, y = CONC, group=NULL), 
+            size = 2,  color = "red") + 
+  # add some better label names too
+  xlab("Time (hours)") +
+  ylab("Concentration (mg/L)")
+
+```
+
 8) add two mean profiles (one for each gender)
+```{r}
+mean_ct_gender <- rich_data %>% group_by(TIME, GENDER) %>% summarize(CONC = mean(CONC)) 
+
+p_conc_time + 
+  # add new line and specify new data to draw this line
+  geom_line(data = mean_ct_gender, 
+            # remember to move color into aes since you're specifying
+            #a column in the dataset to specify the coloring
+            aes(x = TIME, y = CONC, group=NULL,  color = GENDER), 
+            size = 2) + 
+  # add some better label names too
+  xlab("Time (hours)") +
+  ylab("Concentration (mg/L)")
+```
+
 9) color by weight
+```{r}
+ggplot(data = rich_data, 
+                      aes(x = TIME, y = CONC, group=ID, color = WEIGHT)) + 
+  geom_line(size = 1.25) + 
+  geom_point(size = 3)
+```
 
 ## Boxplots and Histograms
 * Histogram(s) of demographics
+```{r}
+# filter to one observation per ID
+ggplot(data = rich_data %>% filter(!duplicated(ID)), 
+       aes(x = WEIGHT)) + 
+  geom_histogram()
+
+# clean up with customizations in geom_histogram
+ggplot(data = rich_data %>% filter(!duplicated(ID)), 
+       aes(x = WEIGHT)) + 
+  geom_histogram(binwidth= 4, color="black", fill="white")
+```
+
+
   * add vertical line for median value
+```{r}
+median <- rich_data %>% filter(!duplicated(ID)) %>% summarize(medianWT = median(WEIGHT))
+ggplot(data = rich_data %>% filter(!duplicated(ID)), 
+       aes(x = WEIGHT)) + 
+  geom_histogram(binwidth= 4, color="black", fill="white") +
+  geom_vline(xintercept = median[["medianWT"]], size= 2, color = "red")
+```
+
 * Boxplot cmax/AUC by gender
+```{r}
+cmaxauc <- rich_data %>% group_by(ID, GENDER) %>% summarize(cmax = max(CONC), aucinf = AUC_inf(TIME, CONC))
+ggplot(cmaxauc, aes(x = GENDER, y = cmax, group = GENDER)) + geom_boxplot()
+ggplot(cmaxauc, aes(x = GENDER, y = aucinf, group = GENDER)) + geom_boxplot()
+```
 
 ## Eta-Eta plots
 Read in `EtaCov_base` dataset
-* Eta-eta scatter plot
-  * add loess fit
-* subset relationships with noticable trend for final plot
+```{r}
+etacov_base <- read.csv("datasets/EtaCov_base.csv")
+```
+
+* Eta-Eta pairs plot
+```{r}
+library(GGally)
+ggpairs(etacov_base %>% select(nV, nCl, nKa),
+        lower=list(continuous="smooth", params=c(colour="black")),
+        diag=list(continuous="density", params=c(colour="black", fill = "white")), axisLabels = "show")
+
+```
+
+* Eta-cov scatter plot
+```{r}
+
+etacov_base$Scenario <- NULL
+library(reshape2)
+enc_melt <- melt(etacov_base, id.vars=c("ID", "WT"))
+gg_covwt <- ggplot(enc_melt, aes(x = WT, y=value, group = ID)) 
+gg_covwt+ geom_point() + 
+  facet_wrap(~variable)
+
+```
+
+* add loess fit
+```{r}
+gg_covwt+ geom_point() + 
+  facet_wrap(~variable)+ stat_smooth(aes(group= variable), se=F, size = 1.25)
+```
 
